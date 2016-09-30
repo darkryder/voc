@@ -158,8 +158,8 @@ def runAsPython(test_dir, main_code, extra_code=None, run_in_function=False, arg
         args = []
 
     if interpreter_proc is not None and extra_code is  None:
-        print("WRITING\n")
-        print(main_code)
+        # print("WRITING\n")
+        # print(main_code)
         interpreter_proc.stdin.write(main_code)
         interpreter_proc.stdin.flush()
 
@@ -168,12 +168,12 @@ def runAsPython(test_dir, main_code, extra_code=None, run_in_function=False, arg
         while True:
             line = interpreter_proc.stdout.readline()
             returned_value = understand_py_output(line)
-            print("Read line %s UNDERSTOOD: %s" %(repr(line), repr(returned_value)))
+            # print("Read line %s UNDERSTOOD: %s" %(repr(line), repr(returned_value)))
             if returned_value.rstrip() == DELIMITER_START:
                 started = True
                 continue
             elif returned_value.rstrip() == DELIMITER_END:
-                print("returning", out)
+                # print("returning", out)
                 return ''.join(out)#.decode('utf8')
             if started:
                 out.append(returned_value)
@@ -402,6 +402,17 @@ class TranspileTestCase(TestCase):
             # normalized format for exceptions, floats etc.
             java_out = cleanse_java(java_out, substitutions)
             py_out = cleanse_python(py_out, substitutions)
+
+            # print("\n-------------------------------")
+            # print("JAVAOUT", repr(java_out))
+            # print("PYOUT", repr(py_out))
+
+            # print (java_out)
+            # print('....')
+            # print(py_out)
+
+            # print("-------------------------------")
+
 
             # Confirm that the output of the Java code is the same as the Python code.
             if message:
