@@ -1,14 +1,6 @@
-import subprocess
 
 from .. utils import (TranspileTestCase, UnaryOperationTestCase, BinaryOperationTestCase, InplaceOperationTestCase)
 
-interpreter_proc = subprocess.Popen(
-                        ['python', '-i'],
-                        stdin=subprocess.PIPE,
-                        stdout=subprocess.PIPE,
-                        stderr=subprocess.STDOUT,
-                        bufsize=1,
-                        universal_newlines=True)
 # import pdb; pdb.set_trace()
 
 class DictTests(TranspileTestCase):
@@ -19,26 +11,26 @@ class DictTests(TranspileTestCase):
             x = {}
             x.attr = 42
             print('Done.')
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
     def test_getattr(self):
         self.assertCodeExecution("""
             x = {}
             print(x.attr)
             print('Done.')
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
     def test_creation(self):
         # Empty dict
         self.assertCodeExecution("""
             x = {}
             print(x)
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
         self.assertCodeExecution("""
             x = {'a': 1}
             print(x)
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
     def test_getitem(self):
         # Simple existent key
@@ -48,7 +40,7 @@ class DictTests(TranspileTestCase):
             print('a' in x)
             print('a' not in x)
             print(x['a'])
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
         # Simple non-existent key
         self.assertCodeExecution("""
@@ -56,7 +48,7 @@ class DictTests(TranspileTestCase):
             print('c' in x)
             print('c' not in x)
             print(x['c'])
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
     def test_clear(self):
         # Clear a dictionary
@@ -66,7 +58,7 @@ class DictTests(TranspileTestCase):
             print(x.clear())
             print('a' not in x)
             print(x)
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
         # Clear an already empty dict
         self.assertCodeExecution("""
@@ -75,7 +67,7 @@ class DictTests(TranspileTestCase):
             print(x.clear())
             print('a' not in x)
             print(x)
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
     def test_builtin_constructor(self):
         # Construct a dictionary using the dict builtin
@@ -107,19 +99,19 @@ class DictTests(TranspileTestCase):
             print('a' in x)
             print(x['a'])
             print('c' in x)
-        """, interpreter_proc)
+        """)#, interpreter_proc)
 
     def test_builtin_non_2_tuples(self):
         # One of the elements isn't a 2-tuple
         self.assertCodeExecution("""
             x = dict([('a', 1), ('b', 2, False)])
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
     def test_builtin_non_sequence(self):
         # One of the elements isn't a sequence
         self.assertCodeExecution("""
             x = dict([('a', 1), False, ('b', 2)])
-            """, interpreter_proc)
+            """)#, interpreter_proc)
 
 
 class UnaryDictOperationTests(UnaryOperationTestCase, TranspileTestCase):

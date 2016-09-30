@@ -31,6 +31,15 @@ _suite_configured = False
 # Set during setUpSuite()
 _output_dir = ''
 
+import subprocess
+
+INTERPRETER_PROC = subprocess.Popen(
+                        ['python', '-i'],
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.STDOUT,
+                        bufsize=1,
+                        universal_newlines=True)
 
 def setUpSuite():
     """Configure the entire test suite.
@@ -373,7 +382,7 @@ class TranspileTestCase(TestCase):
         self.assertEqual(debug.getvalue(), java[1:])
 
     def assertCodeExecution(
-            self, code, interpreter_proc,
+            self, code,
             message=None,
             extra_code=None,
             run_in_global=True, run_in_function=True,
@@ -389,7 +398,7 @@ class TranspileTestCase(TestCase):
                 self.makeTempDir()
                 # Run the code as Python and as Java.
                 # import pdb; pdb.set_trace()
-                py_out = runAsPython(self.temp_dir, code, extra_code, False, args=args, interpreter_proc=interpreter_proc)
+                py_out = runAsPython(self.temp_dir, code, extra_code, False, args=args, interpreter_proc=INTERPRETER_PROC)
                 java_out = self.runAsJava(code, extra_code, False, args=args)
             except Exception as e:
                 self.fail(e)
