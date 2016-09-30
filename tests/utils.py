@@ -514,7 +514,7 @@ class TranspileTestCase(TestCase):
             #==================================================
             # Pass 2 - run the code in a function's context
             #==================================================
-            if run_in_function:
+            if not run_in_function:
                 try:
                     self.makeTempDir()
                     # Run the code as Java.

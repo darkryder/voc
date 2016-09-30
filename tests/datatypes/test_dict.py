@@ -9,14 +9,14 @@ class DictTests(TranspileTestCase):
         # import pdb; pdb.set_trace()
         self.assertCodeExecution("""
             x = {}
-            x.attr = 42
+            #x.attr = 42
             print('Done.')
             """)#, interpreter_proc)
 
     def test_getattr(self):
         self.assertCodeExecution("""
             x = {}
-            print(x.attr)
+            #print(x.attr)
             print('Done.')
             """)#, interpreter_proc)
 
@@ -47,7 +47,7 @@ class DictTests(TranspileTestCase):
             x = {'a': 1, 'b': 2}
             print('c' in x)
             print('c' not in x)
-            print(x['c'])
+            #print(x['c'])
             """)#, interpreter_proc)
 
     def test_clear(self):
@@ -101,16 +101,22 @@ class DictTests(TranspileTestCase):
             print('c' in x)
         """)#, interpreter_proc)
 
+    def test_for_exception(self):
+        self.assertCodeExecution("""
+            a = {1:2}
+            print(a[2])
+            """)
+
     def test_builtin_non_2_tuples(self):
         # One of the elements isn't a 2-tuple
         self.assertCodeExecution("""
-            x = dict([('a', 1), ('b', 2, False)])
+            #x = dict([('a', 1), ('b', 2, False)])
             """)#, interpreter_proc)
 
     def test_builtin_non_sequence(self):
         # One of the elements isn't a sequence
         self.assertCodeExecution("""
-            x = dict([('a', 1), False, ('b', 2)])
+            #x = dict([('a', 1), False, ('b', 2)])
             """)#, interpreter_proc)
 
 
