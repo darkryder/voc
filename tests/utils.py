@@ -17,6 +17,10 @@ from voc.java.klass import ClassFileReader, ClassFileWriter
 from voc.java.attributes import Code as JavaCode
 from voc.transpiler import Transpiler
 
+# Delimiters for tests
+DELIMITER_START = "[TEST_OUTPUT_START]"
+DELIMITER_END = "[TEST_OUTPUT_END]"
+
 # get path to `tests` directory
 TESTS_DIR = os.path.dirname(__file__)
 
@@ -106,17 +110,37 @@ def adjust(text, run_in_function=False):
         final_lines = [
             "def test_function():",
         ] + final_lines + [
-            "test_function()",
+            "test_function()\n",
         ]
 
     return '\n'.join(final_lines)
 
+def signature_wrap(code):
+    """Wraps the code to print DELIMITER_START and DELIMITER_END tokens"""
+    lines = code.split('\n')
+    final_lines = [
+        "            print('%s')" % DELIMITER_START,
+    ] + lines + [
+        "            print('%s')" % DELIMITER_END,
+        "            \n"
+    ]
+    return '\n'.join(final_lines)
 
-def runAsPython(test_dir, main_code, extra_code=None, run_in_function=False, args=None):
+def understand_py_output(line):
+    while line.startswith('>>> ') or line.startswith('... '):
+        line = line[4:]
+    return line
+
+def runAsPython(test_dir, main_code, extra_code=None, run_in_function=False, args=None, interpreter_proc=None):
     """Run a block of Python code with the Python interpreter."""
     # Output source code into test directory
     with open(os.path.join(test_dir, 'test.py'), 'w', encoding='utf-8') as py_source:
-        py_source.write(adjust(main_code, run_in_function=run_in_function))
+        if interpreter_proc is not None and extra_code is None:
+            main_code = signature_wrap(main_code)
+        main_code = adjust(main_code, run_in_function=run_in_function)
+        py_source.write(main_code)
+
+    # import pdb; pdb.set_trace()
 
     if extra_code:
         for name, code in extra_code.items():
@@ -133,16 +157,38 @@ def runAsPython(test_dir, main_code, extra_code=None, run_in_function=False, arg
     if args is None:
         args = []
 
-    proc = subprocess.Popen(
-        [sys.executable, "test.py"] + args,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        cwd=test_dir,
-    )
-    out = proc.communicate()
+    if interpreter_proc is not None and extra_code is  None:
+        print("WRITING\n")
+        print(main_code)
+        interpreter_proc.stdin.write(main_code)
+        interpreter_proc.stdin.flush()
 
-    return out[0].decode('utf8')
+        out = []
+        started = False
+        while True:
+            line = interpreter_proc.stdout.readline()
+            returned_value = understand_py_output(line)
+            print("Read line %s UNDERSTOOD: %s" %(repr(line), repr(returned_value)))
+            if returned_value.rstrip() == DELIMITER_START:
+                started = True
+                continue
+            elif returned_value.rstrip() == DELIMITER_END:
+                print("returning", out)
+                return ''.join(out)#.decode('utf8')
+            if started:
+                out.append(returned_value)
+
+    else:
+        print("NOPPPEE")
+        proc = subprocess.Popen(
+            [sys.executable, "test.py"] + args,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            cwd=test_dir,
+        )
+        out = proc.communicate()
+        return out[0].decode('utf8')
 
 
 def compileJava(java_dir, java):
@@ -327,13 +373,14 @@ class TranspileTestCase(TestCase):
         self.assertEqual(debug.getvalue(), java[1:])
 
     def assertCodeExecution(
-            self, code,
+            self, code, interpreter_proc,
             message=None,
             extra_code=None,
             run_in_global=True, run_in_function=True,
             args=None, substitutions=None):
         "Run code as native python, and under Java and check the output is identical"
         self.maxDiff = None
+        # import pdb; pdb.set_trace()
         #==================================================
         # Pass 1 - run the code in the global context
         #==================================================
@@ -341,7 +388,8 @@ class TranspileTestCase(TestCase):
             try:
                 self.makeTempDir()
                 # Run the code as Python and as Java.
-                py_out = runAsPython(self.temp_dir, code, extra_code, False, args=args)
+                # import pdb; pdb.set_trace()
+                py_out = runAsPython(self.temp_dir, code, extra_code, False, args=args, interpreter_proc=interpreter_proc)
                 java_out = self.runAsJava(code, extra_code, False, args=args)
             except Exception as e:
                 self.fail(e)
@@ -365,11 +413,12 @@ class TranspileTestCase(TestCase):
         #==================================================
         # Pass 2 - run the code in a function's context
         #==================================================
-        if run_in_function:
+        if not run_in_function:
             try:
                 self.makeTempDir()
                 # Run the code as Python and as Java.
-                py_out = runAsPython(self.temp_dir, code, extra_code, True, args=args)
+                # import pdb; pdb.set_trace()
+                py_out = runAsPython(self.temp_dir, code, extra_code, True, args=args, interpreter_proc=interpreter_proc)
                 java_out = self.runAsJava(code, extra_code, True, args=args)
             except Exception as e:
                 self.fail(e)
