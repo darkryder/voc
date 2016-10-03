@@ -80,9 +80,9 @@ public class Complex extends org.python.types.Object {
         if(other instanceof org.python.types.Complex) {
             org.python.types.Complex other_obj = (org.python.types.Complex) other;
             if(((org.python.types.Bool)this.real.__eq__(other_obj.real)).value && ((org.python.types.Bool)this.imag.__eq__(other_obj.imag)).value) {
-                return new org.python.types.Bool(true);
+                return org.python.types.Bool.getBool(true);
             }
-        } return new org.python.types.Bool(false);
+        } return org.python.types.Bool.getBool(false);
         // throw new org.python.exceptions.NotImplementedError("complex.__eq__ has not been implemented.");
     }
 

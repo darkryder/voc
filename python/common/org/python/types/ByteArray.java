@@ -134,7 +134,7 @@ public class ByteArray extends org.python.types.Object {
         __doc__=""
     )
     public org.python.Object __bool__() {
-        return new org.python.types.Bool(this.value.length > 0);
+        return org.python.types.Bool.getBool(this.value.length > 0);
     }
 
     @org.python.Method(
@@ -143,12 +143,12 @@ public class ByteArray extends org.python.types.Object {
     public org.python.Object __eq__(org.python.Object other) {
         if (other instanceof org.python.types.Bytes) {
             byte[] other_value = ((org.python.types.Bytes) other).value;
-            return new org.python.types.Bool(Arrays.equals(this.value, other_value));
+            return org.python.types.Bool.getBool(Arrays.equals(this.value, other_value));
         } else if (other instanceof org.python.types.ByteArray) {
             byte[] other_value = ((org.python.types.ByteArray) other).value;
-            return new org.python.types.Bool(Arrays.equals(this.value, other_value));
+            return org.python.types.Bool.getBool(Arrays.equals(this.value, other_value));
         } else {
-            return new org.python.types.Bool(false);
+            return org.python.types.Bool.getBool(false);
         }
     }
 
@@ -156,7 +156,7 @@ public class ByteArray extends org.python.types.Object {
         __doc__ = ""
     )
     public org.python.Object __ne__(org.python.Object other) {
-        return new org.python.types.Bool(((org.python.types.Bool)this.__eq__(other)).value ? 0 : 1);
+        return org.python.types.Bool.getBool(((org.python.types.Bool)this.__eq__(other)).value ? 0 : 1);
     }
 
     @org.python.Method(
@@ -321,20 +321,20 @@ public class ByteArray extends org.python.types.Object {
         if (other instanceof org.python.types.Bytes) {
             byte[] other_bytes = (byte[])((org.python.types.Bytes) other).value;
             for (int i=0; i < Math.min(this.value.length, other_bytes.length); i++) {
-                if (this.value[i] > other_bytes[i]) return new org.python.types.Bool(1);
-                if (this.value[i] < other_bytes[i]) return new org.python.types.Bool(0);
+                if (this.value[i] > other_bytes[i]) return org.python.types.Bool.getBool(1);
+                if (this.value[i] < other_bytes[i]) return org.python.types.Bool.getBool(0);
             }
-            if (this.value.length < other_bytes.length) return new org.python.types.Bool(0);
-            return new org.python.types.Bool(1);
+            if (this.value.length < other_bytes.length) return org.python.types.Bool.getBool(0);
+            return org.python.types.Bool.getBool(1);
         } else if (other instanceof org.python.types.ByteArray) {
             byte[] other_bytes = (byte[])((org.python.types.ByteArray) other).value;
-            if (other_bytes == null) return new org.python.types.Bool(1);
+            if (other_bytes == null) return org.python.types.Bool.getBool(1);
             for (int i=0; i < Math.min(this.value.length, other_bytes.length); i++) {
-                if (this.value[i] > other_bytes[i]) return new org.python.types.Bool(1);
-                if (this.value[i] < other_bytes[i]) return new org.python.types.Bool(0);
+                if (this.value[i] > other_bytes[i]) return org.python.types.Bool.getBool(1);
+                if (this.value[i] < other_bytes[i]) return org.python.types.Bool.getBool(0);
             }
-            if (this.value.length < other_bytes.length) return new org.python.types.Bool(0);
-            return new org.python.types.Bool(1);
+            if (this.value.length < other_bytes.length) return org.python.types.Bool.getBool(0);
+            return org.python.types.Bool.getBool(1);
         }
         throw new org.python.exceptions.TypeError("unorderable types: bytearray() >= " + other.typeName() + "()");
     }
@@ -346,20 +346,20 @@ public class ByteArray extends org.python.types.Object {
         if (other instanceof org.python.types.Bytes) {
             byte[] other_bytes = (byte[])((org.python.types.Bytes) other).value;
             for (int i=0; i < Math.min(this.value.length, other_bytes.length); i++) {
-                if (this.value[i] > other_bytes[i]) return new org.python.types.Bool(1);
-                if (this.value[i] < other_bytes[i]) return new org.python.types.Bool(0);
+                if (this.value[i] > other_bytes[i]) return org.python.types.Bool.getBool(1);
+                if (this.value[i] < other_bytes[i]) return org.python.types.Bool.getBool(0);
             }
-            if (this.value.length <= other_bytes.length) return new org.python.types.Bool(0);
-            return new org.python.types.Bool(1);
+            if (this.value.length <= other_bytes.length) return org.python.types.Bool.getBool(0);
+            return org.python.types.Bool.getBool(1);
         } else if (other instanceof org.python.types.ByteArray) {
             byte[] other_bytes = (byte[])((org.python.types.ByteArray) other).value;
             if (other_bytes == null) other_bytes = new byte[0];
             for (int i=0; i < Math.min(this.value.length, other_bytes.length); i++) {
-                if (this.value[i] > other_bytes[i]) return new org.python.types.Bool(1);
-                if (this.value[i] < other_bytes[i]) return new org.python.types.Bool(0);
+                if (this.value[i] > other_bytes[i]) return org.python.types.Bool.getBool(1);
+                if (this.value[i] < other_bytes[i]) return org.python.types.Bool.getBool(0);
             }
-            if (this.value.length <= other_bytes.length) return new org.python.types.Bool(0);
-            return new org.python.types.Bool(1);
+            if (this.value.length <= other_bytes.length) return org.python.types.Bool.getBool(0);
+            return org.python.types.Bool.getBool(1);
         }
         throw new org.python.exceptions.TypeError("unorderable types: bytearray() > " + other.typeName() + "()");
     }
@@ -371,20 +371,20 @@ public class ByteArray extends org.python.types.Object {
         if (other instanceof org.python.types.Bytes) {
             byte[] other_bytes = (byte[])((org.python.types.Bytes) other).value;
             for (int i=0; i < Math.min(this.value.length, other_bytes.length); i++) {
-                if (this.value[i] < other_bytes[i]) return new org.python.types.Bool(1);
-                if (this.value[i] > other_bytes[i]) return new org.python.types.Bool(0);
+                if (this.value[i] < other_bytes[i]) return org.python.types.Bool.getBool(1);
+                if (this.value[i] > other_bytes[i]) return org.python.types.Bool.getBool(0);
             }
-            if (this.value.length <= other_bytes.length) return new org.python.types.Bool(1);
-            return new org.python.types.Bool(0);
+            if (this.value.length <= other_bytes.length) return org.python.types.Bool.getBool(1);
+            return org.python.types.Bool.getBool(0);
         } else if (other instanceof org.python.types.ByteArray) {
             byte[] other_bytes = (byte[])((org.python.types.ByteArray) other).value;
             if (other_bytes == null) other_bytes = new byte[0];
             for (int i=0; i < Math.min(this.value.length, other_bytes.length); i++) {
-                if (this.value[i] < other_bytes[i]) return new org.python.types.Bool(1);
-                if (this.value[i] > other_bytes[i]) return new org.python.types.Bool(0);
+                if (this.value[i] < other_bytes[i]) return org.python.types.Bool.getBool(1);
+                if (this.value[i] > other_bytes[i]) return org.python.types.Bool.getBool(0);
             }
-            if (this.value.length <= other_bytes.length) return new org.python.types.Bool(1);
-            return new org.python.types.Bool(0);
+            if (this.value.length <= other_bytes.length) return org.python.types.Bool.getBool(1);
+            return org.python.types.Bool.getBool(0);
         }
         throw new org.python.exceptions.TypeError("unorderable types: bytearray() <= " + other.typeName() + "()");
     }
@@ -396,20 +396,20 @@ public class ByteArray extends org.python.types.Object {
         if (other instanceof org.python.types.Bytes) {
             byte[] other_bytes = (byte[])((org.python.types.Bytes) other).value;
             for (int i=0; i < Math.min(this.value.length, other_bytes.length); i++) {
-                if (this.value[i] < other_bytes[i]) return new org.python.types.Bool(1);
-                if (this.value[i] > other_bytes[i]) return new org.python.types.Bool(0);
+                if (this.value[i] < other_bytes[i]) return org.python.types.Bool.getBool(1);
+                if (this.value[i] > other_bytes[i]) return org.python.types.Bool.getBool(0);
             }
-            if (this.value.length < other_bytes.length) return new org.python.types.Bool(1);
-            return new org.python.types.Bool(0);
+            if (this.value.length < other_bytes.length) return org.python.types.Bool.getBool(1);
+            return org.python.types.Bool.getBool(0);
         } else if (other instanceof org.python.types.ByteArray) {
             byte[] other_bytes = (byte[])((org.python.types.ByteArray) other).value;
-            if (other_bytes == null) return new org.python.types.Bool(0);
+            if (other_bytes == null) return org.python.types.Bool.getBool(0);
             for (int i=0; i < Math.min(this.value.length, other_bytes.length); i++) {
-                if (this.value[i] < other_bytes[i]) return new org.python.types.Bool(1);
-                if (this.value[i] > other_bytes[i]) return new org.python.types.Bool(0);
+                if (this.value[i] < other_bytes[i]) return org.python.types.Bool.getBool(1);
+                if (this.value[i] > other_bytes[i]) return org.python.types.Bool.getBool(0);
             }
-            if (this.value.length < other_bytes.length) return new org.python.types.Bool(1);
-            return new org.python.types.Bool(0);
+            if (this.value.length < other_bytes.length) return org.python.types.Bool.getBool(1);
+            return org.python.types.Bool.getBool(0);
         }
         throw new org.python.exceptions.TypeError("unorderable types: bytearray() < " + other.typeName() + "()");
     }

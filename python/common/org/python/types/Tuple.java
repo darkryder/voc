@@ -90,7 +90,7 @@ public class Tuple extends org.python.types.Object {
         __doc__ = ""
     )
     public org.python.Object __bool__() {
-        return new org.python.types.Bool(!this.value.isEmpty());
+        return org.python.types.Bool.getBool(!this.value.isEmpty());
     }
 
     @org.python.Method(
@@ -112,11 +112,11 @@ public class Tuple extends org.python.types.Object {
             }
 
             if (cmp) {
-                return new org.python.types.Bool(cmp);
+                return org.python.types.Bool.getBool(cmp);
             }
 
             // At this point the lists are different sizes or every comparison is true.
-            return new org.python.types.Bool(size < otherSize);
+            return org.python.types.Bool.getBool(size < otherSize);
 
         } else {
             throw new org.python.exceptions.TypeError(
@@ -144,11 +144,11 @@ public class Tuple extends org.python.types.Object {
             }
 
             if (cmp) {
-                return new org.python.types.Bool(cmp);
+                return org.python.types.Bool.getBool(cmp);
             }
 
             // At this point the lists are different sizes or every comparison is true.
-            return new org.python.types.Bool(size <= otherSize);
+            return org.python.types.Bool.getBool(size <= otherSize);
 
         } else {
             throw new org.python.exceptions.TypeError(
@@ -166,14 +166,14 @@ public class Tuple extends org.python.types.Object {
             org.python.types.Tuple otherTuple = (org.python.types.Tuple) other;
             eq = this.value.equals(otherTuple.value);
         }
-        return new org.python.types.Bool(eq);
+        return org.python.types.Bool.getBool(eq);
     }
 
     @org.python.Method(
         __doc__ = ""
     )
     public org.python.Object __ne__(org.python.Object other) {
-        return new org.python.types.Bool(!((org.python.types.Bool) this.__eq__(other)).value);
+        return org.python.types.Bool.getBool(!((org.python.types.Bool) this.__eq__(other)).value);
     }
 
     @org.python.Method(
@@ -194,11 +194,11 @@ public class Tuple extends org.python.types.Object {
                 cmp = cmp & b.value;
             }
             if (!cmp) {
-                return new org.python.types.Bool(cmp);
+                return org.python.types.Bool.getBool(cmp);
             }
 
             // At this point the lists are different sizes or every comparison is true.
-            return new org.python.types.Bool(size > otherSize);
+            return org.python.types.Bool.getBool(size > otherSize);
 
         } else {
             throw new org.python.exceptions.TypeError(
@@ -226,11 +226,11 @@ public class Tuple extends org.python.types.Object {
             }
 
             if (!cmp) {
-                return new org.python.types.Bool(cmp);
+                return org.python.types.Bool.getBool(cmp);
             }
 
             // At this point the lists are different sizes or every comparison is true.
-            return new org.python.types.Bool(size >= otherSize);
+            return org.python.types.Bool.getBool(size >= otherSize);
 
         } else {
             throw new org.python.exceptions.TypeError(

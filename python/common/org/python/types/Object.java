@@ -182,7 +182,7 @@ public class Object implements org.python.Object {
         args = {"other"}
     )
     public org.python.Object __eq__(org.python.Object other) {
-        return new org.python.types.Bool(System.identityHashCode(this) == System.identityHashCode(other));
+        return org.python.types.Bool.getBool(System.identityHashCode(this) == System.identityHashCode(other));
     }
 
     @org.python.Method(
@@ -190,7 +190,7 @@ public class Object implements org.python.Object {
         args = {"other"}
     )
     public org.python.Object __ne__(org.python.Object other) {
-        return new org.python.types.Bool(System.identityHashCode(this) != System.identityHashCode(other));
+        return org.python.types.Bool.getBool(System.identityHashCode(this) != System.identityHashCode(other));
     }
 
     @org.python.Method(
@@ -924,7 +924,7 @@ public class Object implements org.python.Object {
         __doc__ = ""
     )
     public org.python.Object __not__() {
-        return new org.python.types.Bool(!((org.python.types.Bool) this.__bool__()).value);
+        return org.python.types.Bool.getBool(!((org.python.types.Bool) this.__bool__()).value);
     }
 
     @org.python.Method(

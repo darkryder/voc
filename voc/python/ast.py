@@ -1568,30 +1568,22 @@ class Visitor(ast.NodeVisitor):
             if isinstance(node.ops[0], ast.Is) and not const_comparison:
                 self.context.add_opcodes(
                     IF([], JavaOpcodes.IF_ACMPNE),
-                        JavaOpcodes.NEW('org/python/types/Bool'),
-                        JavaOpcodes.DUP(),
                         JavaOpcodes.ICONST_1(),
-                        JavaOpcodes.INVOKESPECIAL('org/python/types/Bool', '<init>', '(Z)V'),
+                        JavaOpcodes.INVOKESTATIC('org/python/types/Bool', 'getBool', '(Z)Lorg/python/types/Bool;'),
                     ELSE(),
-                        JavaOpcodes.NEW('org/python/types/Bool'),
-                        JavaOpcodes.DUP(),
                         JavaOpcodes.ICONST_0(),
-                        JavaOpcodes.INVOKESPECIAL('org/python/types/Bool', '<init>', '(Z)V'),
+                        JavaOpcodes.INVOKESTATIC('org/python/types/Bool', 'getBool', '(Z)Lorg/python/types/Bool;'),
                     END_IF(),
                 )
 
             elif isinstance(node.ops[0], ast.IsNot) and not const_comparison:
                 self.context.add_opcodes(
                     IF([], JavaOpcodes.IF_ACMPEQ),
-                        JavaOpcodes.NEW('org/python/types/Bool'),
-                        JavaOpcodes.DUP(),
                         JavaOpcodes.ICONST_1(),
-                        JavaOpcodes.INVOKESPECIAL('org/python/types/Bool', '<init>', '(Z)V'),
+                        JavaOpcodes.INVOKESTATIC('org/python/types/Bool', 'getBool', '(Z)Lorg/python/types/Bool;'),
                     ELSE(),
-                        JavaOpcodes.NEW('org/python/types/Bool'),
-                        JavaOpcodes.DUP(),
                         JavaOpcodes.ICONST_0(),
-                        JavaOpcodes.INVOKESPECIAL('org/python/types/Bool', '<init>', '(Z)V'),
+                        JavaOpcodes.INVOKESTATIC('org/python/types/Bool', 'getBool', '(Z)Lorg/python/types/Bool;'),
                     END_IF(),
                 )
 
@@ -1787,21 +1779,17 @@ class Visitor(ast.NodeVisitor):
     def visit_NameConstant(self, node):
         if node.value is None:
             self.context.add_opcodes(
-                JavaOpcodes.GETSTATIC('org/python/types/NoneType', 'NONE', 'Lorg/python/Object;')
+                JavaOpcodes.GETSTATIC('org/python/types/NoneType', 'NONE', '(Lorg/python/Object;)')
             )
         elif node.value is True:
             self.context.add_opcodes(
-                JavaOpcodes.NEW('org/python/types/Bool'),
-                JavaOpcodes.DUP(),
                 JavaOpcodes.ICONST_1(),
-                JavaOpcodes.INVOKESPECIAL('org/python/types/Bool', '<init>', '(Z)V'),
+                JavaOpcodes.INVOKESTATIC('org/python/types/Bool', 'getBool', '(Z)Lorg/python/types/Bool;'),
             )
         elif node.value is False:
             self.context.add_opcodes(
-                JavaOpcodes.NEW('org/python/types/Bool'),
-                JavaOpcodes.DUP(),
                 JavaOpcodes.ICONST_0(),
-                JavaOpcodes.INVOKESPECIAL('org/python/types/Bool', '<init>', '(Z)V'),
+                JavaOpcodes.INVOKESTATIC('org/python/types/Bool', 'getBool', '(Z)Lorg/python/types/Bool;'),
             )
         else:
             raise NotImplementedError("Unknown named constant %s" % node.value)

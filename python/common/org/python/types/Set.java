@@ -92,7 +92,7 @@ public class Set extends org.python.types.Object {
     public org.python.Object __lt__(org.python.Object other) {
         if (other instanceof org.python.types.Set) {
             org.python.types.Set otherSet = (org.python.types.Set) other;
-            return new org.python.types.Bool(otherSet.value.containsAll(this.value) && !this.value.equals(otherSet.value));
+            return org.python.types.Bool.getBool(otherSet.value.containsAll(this.value) && !this.value.equals(otherSet.value));
         }
         throw new org.python.exceptions.TypeError(
             String.format("unorderable types: set() < %s()",
@@ -105,7 +105,7 @@ public class Set extends org.python.types.Object {
     public org.python.Object __le__(org.python.Object other) {
         if (other instanceof org.python.types.Set) {
             org.python.types.Set otherSet = (org.python.types.Set) other;
-            return new org.python.types.Bool(otherSet.value.containsAll(this.value));
+            return org.python.types.Bool.getBool(otherSet.value.containsAll(this.value));
         }
         throw new org.python.exceptions.TypeError(
             String.format("unorderable types: set() <= %s()",
@@ -121,14 +121,14 @@ public class Set extends org.python.types.Object {
             org.python.types.Set otherSet = (org.python.types.Set) other;
             eq = this.value.equals(otherSet.value);
         }
-        return new org.python.types.Bool(eq);
+        return org.python.types.Bool.getBool(eq);
     }
 
     @org.python.Method(
         __doc__ = ""
     )
     public org.python.Object __ne__(org.python.Object other) {
-        return new org.python.types.Bool(!((org.python.types.Bool) this.__eq__(other)).value);
+        return org.python.types.Bool.getBool(!((org.python.types.Bool) this.__eq__(other)).value);
     }
 
     @org.python.Method(
@@ -137,7 +137,7 @@ public class Set extends org.python.types.Object {
     public org.python.Object __gt__(org.python.Object other) {
         if (other instanceof org.python.types.Set) {
             org.python.types.Set otherSet = (org.python.types.Set) other;
-            return new org.python.types.Bool(this.value.containsAll(otherSet.value) && !this.value.equals(otherSet.value));
+            return org.python.types.Bool.getBool(this.value.containsAll(otherSet.value) && !this.value.equals(otherSet.value));
         }
         throw new org.python.exceptions.TypeError(
             String.format("unorderable types: set() > %s()",
@@ -150,7 +150,7 @@ public class Set extends org.python.types.Object {
     public org.python.Object __ge__(org.python.Object other) {
         if (other instanceof org.python.types.Set) {
             org.python.types.Set otherSet = (org.python.types.Set) other;
-            return new org.python.types.Bool(this.value.containsAll(otherSet.value));
+            return org.python.types.Bool.getBool(this.value.containsAll(otherSet.value));
         }
         throw new org.python.exceptions.TypeError(
             String.format("unorderable types: set() >= %s()",
@@ -166,7 +166,7 @@ public class Set extends org.python.types.Object {
         __doc__ = ""
     )
     public org.python.types.Bool __bool__() {
-        return new org.python.types.Bool(this.value.size() > 0);
+        return org.python.types.Bool.getBool(this.value.size() > 0);
     }
 
     @org.python.Method(
@@ -215,14 +215,14 @@ public class Set extends org.python.types.Object {
         __doc__ = ""
     )
     public org.python.Object __contains__(org.python.Object other) {
-        return new org.python.types.Bool(this.value.contains(other));
+        return org.python.types.Bool.getBool(this.value.contains(other));
     }
 
     @org.python.Method(
         __doc__ = ""
     )
     public org.python.Object __not_contains__(org.python.Object other) {
-        return new org.python.types.Bool(!this.value.contains(other));
+        return org.python.types.Bool.getBool(!this.value.contains(other));
     }
 
     @org.python.Method(

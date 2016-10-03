@@ -290,12 +290,12 @@ public class Python {
             while (true) {
                 org.python.Object next = iter.__next__();
                 if (!((org.python.types.Bool) next.__bool__()).value) {
-                    return new org.python.types.Bool(false);
+                    return org.python.types.Bool.getBool(false);
                 }
             }
         } catch (org.python.exceptions.StopIteration si) {
         }
-        return new org.python.types.Bool(true);
+        return org.python.types.Bool.getBool(true);
     }
 
     @org.python.Method(
@@ -311,12 +311,12 @@ public class Python {
             while (true) {
                 org.python.Object next = iter.__next__();
                 if (((org.python.types.Bool) next.__bool__()).value) {
-                    return new org.python.types.Bool(true);
+                    return org.python.types.Bool.getBool(true);
                 }
             }
         } catch (org.python.exceptions.StopIteration si) {
         }
-        return new org.python.types.Bool(false);
+        return org.python.types.Bool.getBool(false);
     }
 
     @org.python.Method(
@@ -368,15 +368,15 @@ public class Python {
     )
     public static org.python.types.Bool bool(org.python.Object x) {
         if (x == null) {
-            return new org.python.types.Bool(false);
+            return org.python.types.Bool.getBool(false);
         }
         try {
             return (org.python.types.Bool) x.__bool__();
         } catch (org.python.exceptions.AttributeError ae) {
             try {
-                return new org.python.types.Bool(((org.python.types.Int) x.__len__()).value != 0);
+                return org.python.types.Bool.getBool(((org.python.types.Int) x.__len__()).value != 0);
             } catch (org.python.exceptions.AttributeError ae2) {
-                return new org.python.types.Bool(true);
+                return org.python.types.Bool.getBool(true);
             }
         }
     }
@@ -480,7 +480,7 @@ public class Python {
         args = {"object"}
     )
     public static org.python.types.Bool callable(org.python.Object object) {
-        return new org.python.types.Bool(org.python.Callable.class.isAssignableFrom(object.getClass()));
+        return org.python.types.Bool.getBool(org.python.Callable.class.isAssignableFrom(object.getClass()));
     }
 
     @org.python.Method(

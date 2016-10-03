@@ -110,7 +110,7 @@ public class Dict extends org.python.types.Object {
         __doc__ = ""
     )
     public org.python.Object __bool__() {
-        return new org.python.types.Bool(!this.value.isEmpty());
+        return org.python.types.Bool.getBool(!this.value.isEmpty());
     }
 
     @org.python.Method(
@@ -140,14 +140,14 @@ public class Dict extends org.python.types.Object {
             org.python.types.Dict otherDict = (org.python.types.Dict) other;
             eq = this.value.equals(otherDict.value);
         }
-        return new org.python.types.Bool(eq);
+        return org.python.types.Bool.getBool(eq);
     }
 
     @org.python.Method(
         __doc__ = ""
     )
     public org.python.Object __ne__(org.python.Object other) {
-        return new org.python.types.Bool(!((org.python.types.Bool) this.__eq__(other)).value);
+        return org.python.types.Bool.getBool(!((org.python.types.Bool) this.__eq__(other)).value);
     }
 
     @org.python.Method(
@@ -267,9 +267,9 @@ public class Dict extends org.python.types.Object {
          // allow unhashable type error to be percolated up.
         try{
             __getitem__(item);
-            return new org.python.types.Bool(true);
+            return org.python.types.Bool.getBool(true);
         } catch(org.python.exceptions.KeyError e) {
-            return new org.python.types.Bool(false);
+            return org.python.types.Bool.getBool(false);
         }
     }
 
@@ -280,9 +280,9 @@ public class Dict extends org.python.types.Object {
          // allow unhashable type error to be percolated up.
         try{
             __getitem__(item);
-            return new org.python.types.Bool(false);
+            return org.python.types.Bool.getBool(false);
         } catch(org.python.exceptions.KeyError e) {
-            return new org.python.types.Bool(true);
+            return org.python.types.Bool.getBool(true);
         }
     }
 

@@ -142,7 +142,7 @@ public class Range extends org.python.types.Object implements org.python.Iterabl
         __doc__ = "Implement __bool__(self)."
     )
     public org.python.Object __bool__() {
-        return new org.python.types.Bool(
+        return org.python.types.Bool.getBool(
             ((org.python.types.Int) this.__len__()).value > 0
         );
     }

@@ -461,10 +461,8 @@ class Method(Function):
                     # JavaOpcodes.LDC_W("INPUT %s TRANSFORM %s" % (i, annotation)),
                     # JavaOpcodes.INVOKESTATIC('org/Python', 'debug', '(Ljava/lang/String;)V'),
 
-                    JavaOpcodes.NEW('org/python/types/Bool'),
-                    JavaOpcodes.DUP(),
                     ILOAD_name(self, param['name']),
-                    JavaOpcodes.INVOKESPECIAL('org/python/types/Bool', '<init>', '(Z)V'),
+                    JavaOpcodes.INVOKESTATIC('org/python/types/Bool', 'getBool', '(Z)Lorg/python/types/Bool;'),
                 ])
             elif annotation == "byte":
                 binding_opcodes.extend([

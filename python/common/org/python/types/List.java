@@ -88,7 +88,7 @@ public class List extends org.python.types.Object {
         __doc__ = ""
     )
     public org.python.Object __bool__() {
-        return new org.python.types.Bool(!this.value.isEmpty());
+        return org.python.types.Bool.getBool(!this.value.isEmpty());
     }
 
     @org.python.Method(
@@ -136,7 +136,7 @@ public class List extends org.python.types.Object {
             }
 
             // At this point the lists are different sizes or every comparison is true.
-            return new org.python.types.Bool(size < otherSize);
+            return org.python.types.Bool.getBool(size < otherSize);
 
         } else {
             throw new org.python.exceptions.TypeError(
@@ -165,7 +165,7 @@ public class List extends org.python.types.Object {
             }
 
             // At this point the lists are different sizes or every comparison is true.
-            return new org.python.types.Bool(size <= otherSize);
+            return org.python.types.Bool.getBool(size <= otherSize);
 
         } else {
             throw new org.python.exceptions.TypeError(
@@ -183,14 +183,14 @@ public class List extends org.python.types.Object {
             org.python.types.List otherList = (org.python.types.List) other;
             eq = this.value.equals(otherList.value);
         }
-        return new org.python.types.Bool(eq);
+        return org.python.types.Bool.getBool(eq);
     }
 
     @org.python.Method(
         __doc__ = ""
     )
     public org.python.Object __ne__(org.python.Object other) {
-        return new org.python.types.Bool(!((org.python.types.Bool) this.__eq__(other)).value);
+        return org.python.types.Bool.getBool(!((org.python.types.Bool) this.__eq__(other)).value);
     }
 
     @org.python.Method(
@@ -213,7 +213,7 @@ public class List extends org.python.types.Object {
             }
 
             // At this point the lists are different sizes or every comparison is true.
-            return new org.python.types.Bool(size > otherSize);
+            return org.python.types.Bool.getBool(size > otherSize);
 
         } else {
             throw new org.python.exceptions.TypeError(
@@ -242,7 +242,7 @@ public class List extends org.python.types.Object {
             }
 
             // At this point the lists are different sizes or every comparison is true.
-            return new org.python.types.Bool(size >= otherSize);
+            return org.python.types.Bool.getBool(size >= otherSize);
 
         } else {
             throw new org.python.exceptions.TypeError(
@@ -397,7 +397,7 @@ public class List extends org.python.types.Object {
                 break;
             }
         }
-        return new org.python.types.Bool(found);
+        return org.python.types.Bool.getBool(found);
     }
 
     @org.python.Method(

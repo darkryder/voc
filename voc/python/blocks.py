@@ -142,10 +142,8 @@ class Block:
             else:
                 if isinstance(value, bool):
                     self.add_opcodes(
-                        JavaOpcodes.NEW('org/python/types/Bool'),
-                        JavaOpcodes.DUP(),
                         ICONST_val(value),
-                        JavaOpcodes.INVOKESPECIAL('org/python/types/Bool', '<init>', '(Z)V'),
+                        JavaOpcodes.INVOKESTATIC('org/python/types/Bool', 'getBool', '(Z)Lorg/python/types/Bool;'),
                     )
 
                 elif isinstance(value, int):

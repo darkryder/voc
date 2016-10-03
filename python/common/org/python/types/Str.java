@@ -106,7 +106,7 @@ public class Str extends org.python.types.Object {
     public org.python.Object __lt__(org.python.Object other) {
         if (other instanceof org.python.types.Str) {
             java.lang.String value = ((org.python.types.Str) other).value;
-            return new org.python.types.Bool(this.value.compareTo(value) < 0);
+            return org.python.types.Bool.getBool(this.value.compareTo(value) < 0);
         } else {
             throw new org.python.exceptions.TypeError("unorderable types: " + this.typeName() + "() < " + other.typeName() + "()");
         }
@@ -118,7 +118,7 @@ public class Str extends org.python.types.Object {
     public org.python.Object __le__(org.python.Object other) {
         if (other instanceof org.python.types.Str) {
             java.lang.String value = ((org.python.types.Str) other).value;
-            return new org.python.types.Bool(this.value.compareTo(value) <= 0);
+            return org.python.types.Bool.getBool(this.value.compareTo(value) <= 0);
         } else {
             throw new org.python.exceptions.TypeError("unorderable types: " + this.typeName() + "() <= " + other.typeName() + "()");
         }
@@ -130,9 +130,9 @@ public class Str extends org.python.types.Object {
     public org.python.Object __eq__(org.python.Object other) {
         if (other instanceof org.python.types.Str) {
             java.lang.String value = ((org.python.types.Str) other).value;
-            return new org.python.types.Bool(this.value.equals(value));
+            return org.python.types.Bool.getBool(this.value.equals(value));
         } else {
-            return new org.python.types.Bool(false);
+            return org.python.types.Bool.getBool(false);
         }
     }
 
@@ -142,9 +142,9 @@ public class Str extends org.python.types.Object {
     public org.python.Object __ne__(org.python.Object other) {
         if (other instanceof org.python.types.Str) {
             java.lang.String value = ((org.python.types.Str) other).value;
-            return new org.python.types.Bool(!this.value.equals(value));
+            return org.python.types.Bool.getBool(!this.value.equals(value));
         } else {
-            return new org.python.types.Bool(true);
+            return org.python.types.Bool.getBool(true);
         }
     }
 
@@ -154,7 +154,7 @@ public class Str extends org.python.types.Object {
     public org.python.Object __gt__(org.python.Object other) {
         if (other instanceof org.python.types.Str) {
             java.lang.String value = ((org.python.types.Str) other).value;
-            return new org.python.types.Bool(this.value.compareTo(value) > 0);
+            return org.python.types.Bool.getBool(this.value.compareTo(value) > 0);
         } else {
             throw new org.python.exceptions.TypeError("unorderable types: " + this.typeName() + "() > " + other.typeName() + "()");
         }
@@ -166,7 +166,7 @@ public class Str extends org.python.types.Object {
     public org.python.Object __ge__(org.python.Object other) {
         if (other instanceof org.python.types.Str) {
             java.lang.String value = ((org.python.types.Str) other).value;
-            return new org.python.types.Bool(this.value.compareTo(value) >= 0);
+            return org.python.types.Bool.getBool(this.value.compareTo(value) >= 0);
         } else {
             throw new org.python.exceptions.TypeError("unorderable types: " + this.typeName() + "() >= " + other.typeName() + "()");
         }
@@ -412,7 +412,7 @@ public class Str extends org.python.types.Object {
         __doc__=""
     )
     public org.python.Object __bool__() {
-        return new org.python.types.Bool(this.value.length() > 0);
+        return org.python.types.Bool.getBool(this.value.length() > 0);
     }
 
     @org.python.Method(
